@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-
+import { Router } from '@angular/router';
 import { MomentFormComponent } from '../../components/moment-form/moment-form.component';
 import { Moment } from '../../entity/moment';
 
 import { MomentService } from '../../services/moment.service';
+import { MessagesService } from '../../services/messages.service';
+ 
 
 @Component({
   selector: 'app-new-moment',
@@ -14,13 +16,13 @@ import { MomentService } from '../../services/moment.service';
 })
 export class NewMomentComponent {
   btnText = "Compatilhar!";
-  
-constructor(private momentService: MomentService){}
 
-async createHandler(moment: Moment) {
+  constructor(private momentService: MomentService, private messagesService: MessagesService,  private router: Router) { }
+
+  createHandler(moment: Moment) {
 
     const formData = new FormData();
- 
+
     if (moment.title) {
       formData.append('title', moment.title);
     }
@@ -31,7 +33,12 @@ async createHandler(moment: Moment) {
       formData.append('image', moment.image);
     }
 
-    await this.momentService.createMoment(formData).subscribe();    
+    this.momentService.createMoment(formData).subscribe();
+
+    this.messagesService.add('Momento adicionado com sucesso!');
+
+    this.router.navigate(['/']);
+
   }
 
 }
