@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup,  FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { Moment } from '../../entity/moment';
+import { Moment } from '../../entities/moment';
 
 @Component({
   selector: 'app-moment-form',

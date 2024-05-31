@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MomentFormComponent } from '../../components/moment-form/moment-form.component';
-import { Moment } from '../../entity/moment';
+import { Moment } from '../../entities/moment';
 
 import { MomentService } from '../../services/moment.service';
 import { MessagesService } from '../../services/messages.service';
