@@ -5,7 +5,7 @@ import { MomentService } from '../../services/moment.service';
 import { faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import { Moment } from '../../entities/moment';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 import { environment } from '../../../environments/environment';
@@ -15,7 +15,7 @@ import { MessagesService } from '../../services/messages.service';
 @Component({
   selector: 'app-moment',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule],
+  imports: [CommonModule, FontAwesomeModule, RouterLink],
   templateUrl: './moment.component.html',
   styleUrl: './moment.component.css'
 })
@@ -37,8 +37,8 @@ export class MomentComponent {
     this.momentService.getMoment(id).subscribe(item => this.moment = item.data);
   }
 
-  removeHandle(id: string) {
-    const idMoment = parseInt(id)
+  removeHandle(id: number) {
+    const idMoment = id;
 
     this.momentService.removeMoment(idMoment).subscribe();
     this.messagesService.add("Momento excluído com sucesso!");

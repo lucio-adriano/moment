@@ -13,15 +13,31 @@ import { Moment } from '../../entities/moment';
 })
 export class MomentFormComponent {
   @Output() onSubmit = new EventEmitter<Moment>
+  @Input({required: true}) momentData!: Moment;
   @Input() btnText! : String;
 
-  momentForm = new FormGroup({
-    id : new FormControl(''),
-    title: new FormControl('', [Validators.required]),
-    description: new FormControl('', [Validators.required]),
-    image: new FormControl('')
-  })
+  image?: File;
 
+  momentForm!: FormGroup;
+
+  constructor(){
+    // TODO: Varificar porque não esta preechendo o form
+    this.momentForm = new FormGroup({
+      id: new FormControl(''),
+      title: new FormControl('', [Validators.required]),
+      description: new FormControl('', [Validators.required]),
+      image: new FormControl(''),
+    })
+
+    if (this.momentData) {    
+      this.momentForm.patchValue({
+        id: this.momentData.id,
+        title: this.momentData.title,
+        description: this.momentData.description,
+      });
+    }
+  };
+  
   get title() {
     return this.momentForm.get('title');
   }
@@ -30,16 +46,15 @@ export class MomentFormComponent {
   }
 
   onFileSelected(event: any){
-    // const file: File = event.target.files[0];
     this.momentForm.patchValue({ image: File = event.target.files[0] });
 
   }
 
   submit() {
-    if (this.momentForm.invalid){
+    if (!this.momentForm.value){
        return;
     }
-    const moment:Moment = this.momentForm.value;
+    const moment: Moment = this.momentForm.value;
     this.onSubmit.emit(moment);
         
   }
