@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { MomentFormComponent } from '../../components/moment-form/moment-form.component';
 import { Moment } from '../../entities/moment';
@@ -16,6 +16,7 @@ import { MessagesService } from '../../services/messages.service';
 })
 export class NewMomentComponent {
   btnText = "Compatilhar!";
+  @Input() moment!: Moment
 
   constructor(private momentService: MomentService, private messagesService: MessagesService,  private router: Router) { }
 

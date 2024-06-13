@@ -13,15 +13,25 @@ import { Moment } from '../../entities/moment';
 })
 export class MomentFormComponent {
   @Output() onSubmit = new EventEmitter<Moment>
-  @Input({required: true}) momentData!: Moment;
+  @Input() momentDataUp!: Moment;
   @Input() btnText! : String;
 
   image?: File;
+  momentTitle!: String;
+  momentData = {
+    'id': '001',
+  'title': 'Titulo',
+  'description': 'Descricao',
+  'image': ''}
 
   momentForm!: FormGroup;
 
   constructor(){
     // TODO: Varificar porque não esta preechendo o form
+    async () =>{
+      await this.visualizarMomento()
+     }
+
     this.momentForm = new FormGroup({
       id: new FormControl(''),
       title: new FormControl('', [Validators.required]),
@@ -29,14 +39,22 @@ export class MomentFormComponent {
       image: new FormControl(''),
     })
 
-    if (this.momentData) {    
-      this.momentForm.patchValue({
-        id: this.momentData.id,
-        title: this.momentData.title,
-        description: this.momentData.description,
-      });
-    }
+
+
+    console.log(this.momentTitle);
+    // if (this.momentData) {    
+    //   this.momentForm.patchValue({
+    //     id: this.momentData.id,
+    //     title: this.momentData.title,
+    //     description: this.momentData.description,
+    //   });
+    // }
   };
+
+  async visualizarMomento(){
+
+    this.momentTitle = this.momentDataUp?.title
+  }
   
   get title() {
     return this.momentForm.get('title');
